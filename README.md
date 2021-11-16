@@ -20,11 +20,12 @@ The dataset contains 10-minute recordings of 30 species of birds. The recordings
 - The recordings are sampled at 44.1 KHz and only one channel is used for processing. 
 - Energy was calculated for all 30 recordings. A rise in energy signifies the presence of birds.
 
-![Energy vs Time Graph](images/energy vs time.png)
+    ![Energy vs Time Graph](images/evt.png)
 
 2) Separate Bird Calls 
 - Identify bird calls and separate them 
-![Energy vs Time Graph](images/energy vs time)
+
+    ![Energy vs Time Split Graph](images/evt_split.png)
 
 3) Padding Audio 
 - Call length of the birds vary causing the duration of the audio clips to be different.
@@ -45,13 +46,15 @@ The dataset contains 10-minute recordings of 30 species of birds. The recordings
 1) Generate Spectrograms
 - A spectrogram, visual representation of frequencies over time, is generated for every audio file.
 - The spectrogram was represented in the Mel scale as it matches more closely to what humans hear 
+
     ![spectrogram gif](images/spectrograms.gif)
 
  2) CAE Framework
  - Since the spectrogram is a 2-D array the CAE was chosen to automatically select the features.  The CAE was used to compress and reconstruct the spectrogram. 
  - The input spectrogram size was 64 x 120. The encoder and decoder contained four hidden layers each. 
  - At the bottleneck layer, the spectrogram size was 4 x 5. 
-    ![cae framework](images/cae.gif)
+
+    ![cae framework](images/cae.png)
 
 ### Training 
 3) Training the Model 
@@ -66,11 +69,13 @@ The dataset contains 10-minute recordings of 30 species of birds. The recordings
 4) Unsupervised Learning – Bird Clustering 
 - The bottleneck layer and clustered the compressed features to observe if we can segment the birds according to the species accurately as shown in the figure below. 
 - The compressed features from the test set were clustered using Hierarchial Clustering. Euclidean Distance was used to compute the linkage. 
-    ![Clustering Compressed](images/clustering.png)
+
+    ![Clustering Compressed](images/clustering.jpg)
 
 ### Evalution 
 5) Evaluate Model 
 - The clustering process was evaluated using Confusion Matrix 
 - However, the problem was that the clustering algorithm assigned an arbitrary label to every cluster it formed. These labels changed every time the clustering algorithm ran.
 - The Hungarian algorithm was used figure out the best configuration that would yield minimal cost.
+
     ![confusion Matrix](images/confusion_matrix.png)
